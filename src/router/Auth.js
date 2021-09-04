@@ -8,6 +8,7 @@ const Auth = () => {
     password: '',
     newAccount: true,
   });
+  const [error, setError] = useState('');
 
   const { email, password, newAccount } = inputs;
 
@@ -30,7 +31,7 @@ const Auth = () => {
       }
       console.log(data);
     } catch (error) {
-      console.log(error);
+      setError(error.message);
     }
   };
   return (
@@ -47,6 +48,7 @@ const Auth = () => {
         />
         {newAccount ? <input type="submit" value="Create Account" /> : <input type="submit" value="Log In" />}
       </form>
+      <div>{error}</div>
       <div>
         <button>Continue with Google</button>
         <button>Continue with Github</button>
