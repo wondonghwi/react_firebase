@@ -20,6 +20,14 @@ const Auth = () => {
     [inputs]
   );
 
+  const toggleAccount = useCallback(() => {
+    setInputs({
+      email: email,
+      password: password,
+      newAccount: !newAccount,
+    });
+  }, [email, newAccount, password]);
+
   const onSubmit = async event => {
     event.preventDefault();
     try {
@@ -49,6 +57,7 @@ const Auth = () => {
         {newAccount ? <input type="submit" value="Create Account" /> : <input type="submit" value="Log In" />}
       </form>
       <div>{error}</div>
+      <span onClick={toggleAccount}>{newAccount ? 'Sign In' : 'Create Account'}</span>
       <div>
         <button>Continue with Google</button>
         <button>Continue with Github</button>
