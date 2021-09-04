@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
-import { authService, firebaseInstance } from '../myfirebase';
+import { firebaseInstance, googleProvider, authService, githubProvider } from '../myfirebase';
 
 const Auth = () => {
   const [inputs, setInputs] = useState({
@@ -34,11 +34,9 @@ const Auth = () => {
     } = e;
     let provider;
     if (name === 'google') {
-      //TODO GoogleAuthProvider
-      provider = new firebaseInstance.auth.GoogleAuthProvider();
+      provider = new googleProvider();
     } else if (name === 'github') {
-      //TODO GithubAuthProvider
-      provider = new firebaseInstance.auth.GithubAuthProvider();
+      provider = new githubProvider();
     }
     const data = await authService.signInWithPopup(provider);
     console.log(data);
