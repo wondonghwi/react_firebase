@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { dbService } from '../myfirebase';
+import Tweets from '../components/Tweets';
 
 const Home = ({ userObj }) => {
   const [tweet, setTweet] = useState('');
@@ -40,13 +41,9 @@ const Home = ({ userObj }) => {
         <input type="text" value={tweet} onChange={onChange} placeholder="what's on your mind?" maxLength={120} />
         <button type="submit">tweet 버튼</button>
       </form>
-      <div>
-        {tweets.map(tweet => (
-          <div key={tweet.id}>
-            <h4>{tweet.text}</h4>
-          </div>
-        ))}
-      </div>
+      {tweets.map(tweet => (
+        <Tweets key={tweet.id} tweetObj={tweet} isOwner={tweet.createId === userObj.uid} />
+      ))}
     </div>
   );
 };

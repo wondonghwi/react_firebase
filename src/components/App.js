@@ -17,7 +17,7 @@ const App = () => {
       setInit(true);
     });
   }, []);
-  return <>{init ? <RouterComponent isLoggedIn={isLoggedIn} userObj={userObj} /> : 'Initializing....'}</>;
+  return <>{init ? <RouterComponent isLoggedIn={!!isLoggedIn} userObj={userObj} /> : 'Initializing....'}</>;
 };
 
 export default App;
