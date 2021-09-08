@@ -6,6 +6,18 @@ const Home = ({ userObj }) => {
   const [tweet, setTweet] = useState('');
   const [tweets, setTweets] = useState([]);
 
+  const onFileChange = e => {
+    const {
+      target: { files },
+    } = e;
+    const theFile = files[0];
+    const reader = new FileReader();
+    reader.onloadend = finishedEvent => {
+      console.log(finishedEvent);
+    };
+    reader.readAsDataURL(theFile);
+  };
+
   useEffect(() => {
     dbService.collection('tweets').onSnapshot(snapshot => {
       const tweetArray = snapshot.docs.map(doc => ({
@@ -39,6 +51,7 @@ const Home = ({ userObj }) => {
     <div>
       <form onSubmit={onSubmit}>
         <input type="text" value={tweet} onChange={onChange} placeholder="what's on your mind?" maxLength={120} />
+        <input type="file" accept="image/*" onChange={onFileChange} />
         <button type="submit">tweet 버튼</button>
       </form>
       {tweets.map(tweet => (
