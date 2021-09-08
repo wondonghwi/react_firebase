@@ -5,6 +5,7 @@ import Tweets from '../components/Tweets';
 const Home = ({ userObj }) => {
   const [tweet, setTweet] = useState('');
   const [tweets, setTweets] = useState([]);
+  const [attachment, setAttachment] = useState(null);
 
   const onFileChange = e => {
     const {
@@ -13,10 +14,13 @@ const Home = ({ userObj }) => {
     const theFile = files[0];
     const reader = new FileReader();
     reader.onloadend = finishedEvent => {
-      console.log(finishedEvent);
+      const { result } = finishedEvent.currentTarget;
+      setAttachment(result);
     };
     reader.readAsDataURL(theFile);
   };
+
+  const onClearAttatchment = () => setAttachment(null);
 
   useEffect(() => {
     dbService.collection('tweets').onSnapshot(snapshot => {
@@ -51,8 +55,15 @@ const Home = ({ userObj }) => {
     <div>
       <form onSubmit={onSubmit}>
         <input type="text" value={tweet} onChange={onChange} placeholder="what's on your mind?" maxLength={120} />
-        <input type="file" accept="image/*" onChange={onFileChange} />
         <button type="submit">tweet 버튼</button>
+        <br />
+        <input type="file" accept="image/*" onChange={onFileChange} />
+        {attachment && (
+          <div>
+            <img src={attachment} alt="사진" width="50px" height="50px" />
+            <button onClick={onClearAttatchment}>Clear</button>
+          </div>
+        )}
       </form>
       {tweets.map(tweet => (
         <Tweets key={tweet.id} tweetObj={tweet} isOwner={tweet.createId === userObj.uid} />
