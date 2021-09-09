@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { dbService, storageService } from '../myfirebase';
-import Tweets from '../components/Tweets';
+import { dbService, storageService } from 'myfirebase';
+import Tweets from 'components/Tweets';
 
 const Home = ({ userObj }) => {
   const [tweet, setTweet] = useState('');

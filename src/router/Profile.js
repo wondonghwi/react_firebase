@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { useHistory } from 'react-router-dom';
-import { authService } from '../myfirebase';
+import { authService } from 'myfirebase';
 
 const Profile = () => {
   const history = useHistory();

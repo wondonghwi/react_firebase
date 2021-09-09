@@ -1,9 +1,9 @@
 import React from 'react';
 import { HashRouter as Router, Route, Switch } from 'react-router-dom';
-import Home from '../router/Home';
-import Auth from '../router/Auth';
-import Navigation from './Navigation';
-import Profile from '../router/Profile';
+import Home from 'router/Home';
+import Profile from 'router/Profile';
+import Auth from 'router/Auth';
+import Navigation from 'components/Navigation';
 
 const RouterComponent = ({ isLoggedIn, userObj }) => {
   return (

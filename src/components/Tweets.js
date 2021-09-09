@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import { dbService, storageService } from '../myfirebase';
+import { dbService, storageService } from 'myfirebase';
 
 const Tweets = ({ tweetObj, isOwner }) => {
   const [editing, setEditing] = useState(false);

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import RouterComponent from './RouterComponent';
 import { authService } from 'myfirebase';
+import RouterComponent from 'components/RouterComponent';
 
 const App = () => {
   const [init, setInit] = useState(false);
