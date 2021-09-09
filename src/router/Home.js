@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { dbService } from '../myfirebase';
+import { v4 as uuidv4 } from 'uuid';
+import { dbService, storageService } from '../myfirebase';
 import Tweets from '../components/Tweets';
 
 const Home = ({ userObj }) => {
@@ -32,24 +33,33 @@ const Home = ({ userObj }) => {
     });
   }, []);
 
-  const onSubmit = useCallback(
-    async e => {
-      e.preventDefault();
-      await dbService.collection('tweets').add({
-        text: tweet,
-        createdAt: Date.now(),
-        createId: userObj.uid,
-      });
-      setTweet('');
-    },
-    [tweet, userObj.uid]
-  );
   const onChange = useCallback(e => {
     const {
       target: { value },
     } = e;
     setTweet(value);
   }, []);
+  const onSubmit = useCallback(
+    async e => {
+      e.preventDefault();
+      let attachmentUrl = '';
+      if (attachment !== '') {
+        const attachmentRef = storageService.ref().child(`${userObj.uid}/${uuidv4()}`);
+        const response = await attachmentRef.putString(attachment, 'data_url');
+        attachmentUrl = await response.ref.getDownloadURL();
+      }
+      const tweetObj = {
+        text: tweet,
+        createdAt: Date.now(),
+        createId: userObj.uid,
+        attachmentUrl,
+      };
+      await dbService.collection('tweets').add(tweetObj);
+      setTweet('');
+      setAttachment('');
+    },
+    [attachment, tweet, userObj.uid]
+  );
 
   return (
     <div>
