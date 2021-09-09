@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import { dbService } from '../myfirebase';
+import { dbService, storageService } from '../myfirebase';
 
 const Tweets = ({ tweetObj, isOwner }) => {
   const [editing, setEditing] = useState(false);
@@ -9,8 +9,9 @@ const Tweets = ({ tweetObj, isOwner }) => {
     const ok = window.confirm('Are you sure you want delete?');
     if (ok) {
       await dbService.doc(`tweets/${tweetObj.id}`).delete();
+      await storageService.refFromURL(tweetObj.attachmentUrl).delete();
     }
-  }, [tweetObj.id]);
+  }, [tweetObj.attachmentUrl, tweetObj.id]);
 
   const toggleEditing = useCallback(() => {
     setEditing(prev => !prev);
