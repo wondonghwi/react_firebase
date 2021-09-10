@@ -6,7 +6,7 @@ import Tweets from 'components/Tweets';
 const Home = ({ userObj }) => {
   const [tweet, setTweet] = useState('');
   const [tweets, setTweets] = useState([]);
-  const [attachment, setAttachment] = useState(null);
+  const [attachment, setAttachment] = useState('');
 
   const onFileChange = e => {
     const {
