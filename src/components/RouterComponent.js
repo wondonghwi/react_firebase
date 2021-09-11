@@ -10,20 +10,22 @@ const RouterComponent = ({ isLoggedIn, userObj, refreshUser }) => {
     <Router>
       {isLoggedIn && <Navigation userObj={userObj} />}
       <Switch>
-        {isLoggedIn ? (
-          <>
+        <>
+          {isLoggedIn ? (
+            <div className="Router">
+              <Route exact path="/">
+                <Home userObj={userObj} />
+              </Route>
+              <Route exact path="/profile">
+                <Profile userObj={userObj} refreshUser={refreshUser} />
+              </Route>
+            </div>
+          ) : (
             <Route exact path="/">
-              <Home userObj={userObj} />
+              <Auth />
             </Route>
-            <Route exact path="/profile">
-              <Profile userObj={userObj} refreshUser={refreshUser} />
-            </Route>
-          </>
-        ) : (
-          <Route exact path="/">
-            <Auth />
-          </Route>
-        )}
+          )}
+        </>
       </Switch>
     </Router>
   );
