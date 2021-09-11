@@ -1,8 +1,8 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { authService, dbService } from 'myfirebase';
+import { authService } from 'myfirebase';
 
-const Profile = ({ userObj }) => {
+const Profile = ({ userObj, refreshUser }) => {
   const history = useHistory();
   const [newDisplayName, setNewDisplayName] = useState(userObj.displayName);
   const onLogoutClick = useCallback(() => {
@@ -22,9 +22,10 @@ const Profile = ({ userObj }) => {
         await userObj.updateProfile({
           displayName: newDisplayName,
         });
+        refreshUser();
       }
     },
-    [newDisplayName, userObj]
+    [newDisplayName, refreshUser, userObj]
   );
 
   return (
