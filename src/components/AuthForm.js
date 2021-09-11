@@ -46,31 +46,37 @@ const AuthForm = () => {
   };
 
   return (
-    <div>
-      <form onSubmit={onSubmit} className="container">
-        <input
-          name="email"
-          type="text"
-          placeholder="Email"
-          required
-          value={email}
-          onChange={handleChange}
-          className="authInput"
-        />
-        <input
-          name="password"
-          type="password"
-          placeholder="Password"
-          required
-          value={password}
-          onChange={handleChange}
-          className="authInput"
-        />
-        <input type="submit" className="authInput authSubmit" value={newAccount ? 'Create Account' : 'Sign In'} />
-      </form>
-      {error && <span className="authError">{error}</span>}
-      <span onClick={toggleAccount}>{newAccount ? 'Sign In' : 'Create Account'}</span>
-    </div>
+    <>
+      <div>
+        <form onSubmit={onSubmit} className="container">
+          <input
+            name="email"
+            type="text"
+            placeholder="Email"
+            required
+            value={email}
+            onChange={handleChange}
+            className="authInput"
+          />
+          <input
+            name="password"
+            type="password"
+            placeholder="Password"
+            required
+            value={password}
+            onChange={handleChange}
+            className="authInput"
+          />
+          <input type="submit" className="authInput authSubmit" value={newAccount ? 'Create Account' : 'Sign In'} />
+        </form>
+        {error && <span className="authError">{error}</span>}
+      </div>
+      <div>
+        <span onClick={toggleAccount} style={{ cursor: 'pointer' }}>
+          {newAccount ? 'Sign In' : 'Create Account'}
+        </span>
+      </div>
+    </>
   );
 };
 
