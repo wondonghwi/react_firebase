@@ -1,28 +1,41 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { authService, dbService } from 'myfirebase';
 
 const Profile = ({ userObj }) => {
   const history = useHistory();
+  const [newDisplayName, setNewDisplayName] = useState(userObj.displayName);
   const onLogoutClick = useCallback(() => {
     authService.signOut();
     history.push('/');
   }, [history]);
 
-  const getMyTweets = useCallback(async () => {
-    const tweets = await dbService
-      .collection('tweets')
-      .where('creatorId', '==', userObj.uid)
-      .orderBy('createdAt')
-      .get();
-    console.log(tweets.docs.map(doc => doc.data()));
-  }, [userObj.uid]);
+  const onChange = useCallback(e => {
+    const { value } = e.target;
+    setNewDisplayName(value);
+  }, []);
 
-  useEffect(() => {
-    getMyTweets();
-  }, [getMyTweets]);
+  const onSubmit = useCallback(
+    async e => {
+      e.preventDefault();
+      if (userObj.displayName !== newDisplayName) {
+        await userObj.updateProfile({
+          displayName: newDisplayName,
+        });
+      }
+    },
+    [newDisplayName, userObj]
+  );
 
-  return <button onClick={onLogoutClick}>Log Out</button>;
+  return (
+    <>
+      <form onSubmit={onSubmit}>
+        <input type="text" onChange={onChange} value={newDisplayName} placeholder="Display name" />
+        <button type="submit">Update Profile</button>
+      </form>
+      <button onClick={onLogoutClick}>Log Out</button>
+    </>
+  );
 };
 
 export default Profile;
